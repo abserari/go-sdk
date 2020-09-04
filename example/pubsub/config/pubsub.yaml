@@ -3,9 +3,66 @@ kind: Component
 metadata:
   name: messagebus
 spec:
-  type: pubsub.redis
+  type: pubsub.natsstreaming
   metadata:
-  - name: redisHost
-    value: localhost:6379
-  - name: redisPassword
-    value: ""
+  - name: natsURL
+    value: nats://localhost:4222
+  - name: natsStreamingClusterID
+    value: test-cluster
+    # blow are subscription configuration.
+  - name: subscriptionType
+    value: topic
+  # - name: consumerID
+    # value: queuename
+  # - name: durableSubscriptionName
+  #   value: ""
+  # - name: startAtSequence
+    # value: 1
+  # - name: startWithLastReceived
+    # value: false
+  - name: deliverAll
+    value: true
+  # - name: deliverNew
+  #   value: false
+  # - name: startAtTimeDelta
+  #   value: ""
+  # - name: startAtTime
+  #   value: ""
+  # - name: startAtTimeFormat
+  #   value: ""
+
+
+# apiVersion: dapr.io/v1alpha1
+# kind: Component
+# metadata:
+#   name: messagebus
+# spec:
+#   type: pubsub.redis
+#   metadata:
+#   - name: redisHost
+#     value: localhost:6379
+#   - name: redisPassword
+#     value: ""
+
+# apiVersion: dapr.io/v1alpha1
+# kind: Component
+# metadata:
+#   name: messagebus
+#   namespace: rabbitmq
+# spec:
+#   type: pubsub.rabbitmq
+#   metadata:
+#   - name: host
+#     value: amqp://user:GSlU5LpIa1@192.168.0.253:32482 # Required. Example: "amqp://rabbitmq.default.svc.cluster.local:5672", "amqp://localhost:5672"
+#   - name: consumerID
+#     value: myConsumerID # Required. Any unique ID. Example: "myConsumerID"
+#   # - name: durable
+#   #   value: <REPLACE-WITH-DURABLE> # Optional. Default: "false"
+#   # - name: deletedWhenUnused
+#   #   value: <REPLACE-WITH-DELETE-WHEN-UNUSED> # Optional. Default: "false"
+#   - name: autoAck
+#     value: true # Optional. Default: "false"
+#   - name: deliveryMode
+#     value: 2 # Optional. Default: "0". Values between 0 - 2.
+#   # - name: requeueInFailure
+#   #   value: <REPLACE-WITH-REQUEUE-IN-FAILURE> # Optional. Default: "false".

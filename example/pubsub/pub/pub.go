@@ -3,14 +3,14 @@ package main
 import (
 	"context"
 	"fmt"
-	"os"
 
 	dapr "github.com/dapr/go-sdk/client"
 )
 
 var (
 	// set the environment as instructions.
-	pubsubName = os.Getenv("DAPR_PUBSUB_NAME")
+	// pubsubName = os.Getenv("DAPR_PUBSUB_NAME")
+	pubsubName = "messagebus"
 	topicName  = "neworder"
 )
 

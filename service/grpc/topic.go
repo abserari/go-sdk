@@ -11,6 +11,27 @@ import (
 )
 
 // AddTopicEventHandler appends provided event handler with topic name to the service
+func (s *Server) AddTopicFailedEventHandler(sub *common.Subscription, fn func(ctx context.Context, e *common.TopicEvent) error) error {
+	if sub == nil {
+		return errors.New("subscription required")
+	}
+	if sub.Topic == "" {
+		return errors.New("topic name required")
+	}
+	if sub.PubsubName == "" {
+		return errors.New("pub/sub name required")
+	}
+	key := fmt.Sprintf("%s-%s", sub.PubsubName, sub.Topic)
+	s.topicSubscriptions[key] = &topicEventHandler{
+		component: sub.PubsubName,
+		topic:     sub.Topic,
+		fn:        fn,
+		meta:      sub.Metadata,
+	}
+	return nil
+}
+
+// AddTopicEventHandler appends provided event handler with topic name to the service
 func (s *Server) AddTopicEventHandler(sub *common.Subscription, fn func(ctx context.Context, e *common.TopicEvent) error) error {
 	if sub == nil {
 		return errors.New("subscription required")
